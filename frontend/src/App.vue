@@ -72,17 +72,19 @@ const steps = [
   }
 ]
 
-const currentPath = ref(window.location.pathname)
+const getRoute = () => window.location.hash.replace('#', '') || '/'
+
+const currentPath = ref(getRoute())
 
 const goTo = (path) => {
-  window.history.pushState({}, '', path)
+  window.location.hash = path
   currentPath.value = path
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 const goHomeSection = (sectionId) => {
   if (currentPath.value !== '/') {
-    window.history.pushState({}, '', '/')
+    window.location.hash = '/'
     currentPath.value = '/'
     window.setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 0)
     return
@@ -92,8 +94,8 @@ const goHomeSection = (sectionId) => {
 }
 
 onMounted(() => {
-  window.addEventListener('popstate', () => {
-    currentPath.value = window.location.pathname
+  window.addEventListener('hashchange', () => {
+    currentPath.value = getRoute()
   })
 })
 </script>
