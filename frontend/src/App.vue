@@ -1,5 +1,8 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import galleryCleanGrave from './assets/gallery-clean-grave.png'
+import galleryFlowersCandles from './assets/gallery-flowers-candles.png'
+import gallerySeasonalCare from './assets/gallery-seasonal-care.png'
 
 const packages = [
   {
@@ -67,6 +70,30 @@ const paymentMethods = [
   {
     name: 'PayPal lub karta',
     description: 'Wygodna opcja dla osób mieszkających za granicą.'
+  }
+]
+
+const galleryItems = [
+  {
+    image: galleryCleanGrave,
+    title: 'Czyszczenie płyty',
+    titleEn: 'Stone cleaning',
+    text: 'Uporządkowana płyta i otoczenie grobu po wykonaniu usługi.',
+    textEn: 'Cleaned stone surface and surrounding area after the service.'
+  },
+  {
+    image: galleryFlowersCandles,
+    title: 'Kwiaty i znicze',
+    titleEn: 'Flowers and candles',
+    text: 'Dyskretna oprawa miejsca pamięci w okolicy ważnej daty.',
+    textEn: 'A respectful arrangement around an important date.'
+  },
+  {
+    image: gallerySeasonalCare,
+    title: 'Porządek sezonowy',
+    titleEn: 'Seasonal care',
+    text: 'Usunięcie liści i uporządkowanie grobu po zmianie pogody.',
+    textEn: 'Leaf removal and tidying after seasonal weather changes.'
   }
 ]
 
@@ -259,6 +286,13 @@ onMounted(() => {
             {{ copy('Kontakt', 'Contact') }}
             <input type="tel" placeholder="+48 ..." />
           </label>
+          <label class="consent-option">
+            <input type="checkbox" />
+            <span>
+              <strong>{{ copy('Zgoda na wykorzystanie zdjęć realizacji', 'Consent to use service photos') }}</strong>
+              <small>{{ copy('Wyrażam zgodę na ewentualne pokazanie zdjęć tej realizacji w galerii strony po zamazaniu danych osobowych, napisów na nagrobku i innych informacji identyfikujących.', 'I agree that photos from this service may be shown in the website gallery after blurring personal data, grave inscriptions and other identifying information.') }}</small>
+            </span>
+          </label>
           <fieldset class="payment-options">
             <legend>{{ copy('Metoda płatności', 'Payment method') }}</legend>
             <label v-for="method in paymentMethods" :key="method.name" class="payment-option">
@@ -354,6 +388,23 @@ onMounted(() => {
             </article>
           </div>
         </div>
+        </div>
+      </section>
+
+      <section class="section gallery-section">
+        <div class="section-heading">
+          <p class="eyebrow">{{ copy('Przykłady realizacji', 'Example results') }}</p>
+          <h2>{{ copy('Efekt po wykonaniu usługi', 'After-service results') }}</h2>
+          <p>{{ copy('Poniższe zdjęcia pokazują kierunek i standard pracy. Przy prawdziwych realizacjach dane osobowe i napisy na nagrobkach będą ukrywane lub kadrowane.', 'The photos below show the intended quality and style. For real work examples, personal details and grave inscriptions will be hidden or cropped.') }}</p>
+        </div>
+        <div class="gallery-grid">
+          <article v-for="item in galleryItems" :key="item.title" class="gallery-card">
+            <img :src="item.image" :alt="copy(item.title, item.titleEn)" />
+            <div>
+              <h3>{{ copy(item.title, item.titleEn) }}</h3>
+              <p>{{ copy(item.text, item.textEn) }}</p>
+            </div>
+          </article>
         </div>
       </section>
 
